@@ -4,8 +4,13 @@ import React from 'react'
 
 import TableRow from './TableRow'
 
-const TableHeader = ({ headerData }) => ( 
-  <TableRow rowData={ headerData } className='TableHeader'/>
+const TableHeader = ({ headerData, setSortingField }) => ( 
+  <TableRow 
+    type='header'
+    rowData={ headerData } 
+    className='TableHeader'
+    handleClick={ setSortingField }
+  />
 )
 
 export default TableHeader

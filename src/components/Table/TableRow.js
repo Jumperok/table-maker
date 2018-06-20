@@ -4,12 +4,25 @@ import React from 'react'
 
 import TableRowColumn from './TableRowColumn'
 
-const TableRow = ({ rowData, className }) => {
+const TableRow = ({ rowData, className, handleClick, type }) => {
+  //console.log("rowData", rowData)
   return(
-  <div className={ className }>
+  <div 
+    className={ className } 
+    
+  >
     {
-      rowData.map(
-        (value, index) => <TableRowColumn key={ index }>{ value }</TableRowColumn>
+      Object.values(rowData).map(
+        (value, index) => (
+          <TableRowColumn 
+            rowData={ rowData }
+            type={ type } 
+            handleClick={ handleClick }
+            key={ index }
+          >
+            { value }
+          </TableRowColumn>
+        )
       )
     }
   </div>)

@@ -6,7 +6,7 @@ import TableRow from './TableRow'
 
 const TableBody = ({ bodyData }) => {
 
-  const { tableData, pageSize, currentPage } = bodyData
+  const { dataFromAPI, pageSize, currentPage } = bodyData
 
   const showingData = (bodyData, pageSize, currentPage) => {
     return bodyData.map(
@@ -17,7 +17,8 @@ const TableBody = ({ bodyData }) => {
   return (
     <div className='TableBody'>
       {
-        showingData(tableData.slice(1), pageSize, currentPage)
+        showingData(dataFromAPI.slice(1), pageSize, currentPage)
+
       }
     </div>
   )

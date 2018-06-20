@@ -4,33 +4,52 @@ import React from 'react'
 
 // Components //
 
-import Table from './components/Table/Table'
+import Table      from './components/Table/Table'
 import Pagination from './components/Pagination'
 
 const API = 'http://www.mocky.io/v2/5b29e2bd30000066009cd055'
 
 class App extends React.Component {
   state = {
-    tableData: [],
-    pageSize: 10,
-    currentPage: 1
+    dataFromAPI : [],
+    pageSize    : 10,
+    currentPage : 1,
+    sort: {
+      field: '',
+      direction: ''
+    }
+    //sortingField: ''
   }
 
   componentDidMount() {
     fetch(API) // ОШИБКИ
       .then(response => response.json())
-      .then(dataAPI => this.setState({tableData: dataAPI}))
+      .then(dataAPI => {
+        this.setState({ dataFromAPI: dataAPI })
+      })
   }
 
-  render() {
-    const { tableData, pageSize, currentPage } = this.state
+  setCurrentPage = (newCurrentPage) => this.setState({ currentPage: newCurrentPage })
 
+  setSortingField = (field) => this.setState({ sort: {...this.state.sort, field} })
+
+  render() {
+    const { dataFromAPI, pageSize, currentPage } = this.state
+    
     return (
-      tableData.length
+      dataFromAPI.length
       ? (
           <React.Fragment>
-            <Table tableData={ this.state } />
-            <Pagination currentPage={ currentPage } rowNumber={ tableData.slice(1).length } pageSize={ pageSize } />
+            <Table 
+              tableData={ this.state } 
+              setSortingField={ this.setSortingField } 
+            />
+            <Pagination 
+              currentPage={ currentPage } 
+              rowNumber={ dataFromAPI.slice(1).length } 
+              pageSize={ pageSize } 
+              setCurrentPage={ this.setCurrentPage }
+            />
           </React.Fragment>
         )
       : null
