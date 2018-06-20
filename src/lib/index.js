@@ -10,15 +10,24 @@ export const getData = async (cb) => {
   }
 }
 
-export const naturalSort = (array) => {
+export const getKeyByValue = (object, value) => (
+  Object.keys(object)
+    .find(key => object[key] === value)
+)
+
+export const naturalSort = (array, direction, fieldIndex) => {
   // преобразуем исходный массив в массив сплиттеров
   var splitters = array.map(makeSplitter);
   // сортируем сплиттеры
   var sorted = splitters.sort(compareSplitters);
   // возвращаем исходные данные в новом порядке
-  return sorted.map(function (splitter) {
-    return splitter.item;
-  });
+  return (direction === 'down') 
+    ? sorted.reverse().map(function (splitter) {
+        return splitter.item;
+      }) 
+    : sorted.map(function (splitter) {
+        return splitter.item;
+      });
   // обёртка конструктора сплиттера
   function makeSplitter(item) {
     return new Splitter(item);
@@ -33,7 +42,7 @@ export const naturalSort = (array) => {
     // исходный объект
     this.item = item;
     // ключ - строка
-    var key = item;
+    var key = "" + item[fieldIndex]
     this.key = key;
     // количество найденных фрагментов
     this.count = function () {
@@ -93,7 +102,7 @@ export const naturalSort = (array) => {
           // части одного типа можно просто сравнить
         } else {
           var comp = compare(first.value, second.value);
-          if (comp != 0) {
+          if (comp !== 0) {
             return comp;
           }
         } // end if
@@ -119,4 +128,13 @@ export const naturalSort = (array) => {
       return ch.charCodeAt(0);
     };
   };
+}
+
+export const getFieldIndex = (obj, field) => {
+  let index = 0
+  for (let key in obj){
+    if(key === field) return index
+    index++
+  }
+  return NaN
 }

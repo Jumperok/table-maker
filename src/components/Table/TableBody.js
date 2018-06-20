@@ -8,17 +8,22 @@ const TableBody = ({ bodyData }) => {
 
   const { dataFromAPI, pageSize, currentPage } = bodyData
 
-  const showingData = (bodyData, pageSize, currentPage) => {
-    return bodyData.map(
-      row => <TableRow className='TableRow' key={row[0]} rowData={row} />
-    ).slice((currentPage-1)*pageSize, (currentPage-1)*pageSize+pageSize)
-  }
+  const onOnePageData = (bodyData, pageSize, currentPage) => (
+    bodyData.map(
+      row => (
+        <TableRow 
+          className='TableRow' 
+          key={row[0]} 
+          rowData={row} 
+        />
+      )
+    ).slice( (currentPage-1)*pageSize, (currentPage-1)*pageSize+pageSize )
+  )
   
   return (
     <div className='TableBody'>
       {
-        showingData(dataFromAPI.slice(1), pageSize, currentPage)
-
+        onOnePageData(dataFromAPI.slice(1), pageSize, currentPage)
       }
     </div>
   )
