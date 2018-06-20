@@ -15,8 +15,8 @@ class App extends React.Component {
     pageSize    : 10,
     currentPage : 1,
     sort: {
-      field: '',
-      direction: ''
+      field    : '',
+      direction: 'up'
     }
     //sortingField: ''
   }
@@ -31,7 +31,7 @@ class App extends React.Component {
 
   setCurrentPage = (newCurrentPage) => this.setState({ currentPage: newCurrentPage })
 
-  setSortingField = (field) => this.setState({ sort: {...this.state.sort, field} })
+  setSortingField = (field) => this.setState({ sort: {...this.state.sort, field, direction: this.state.sort.direction === 'up' ? 'down' : 'up'} })
 
   render() {
     const { dataFromAPI, pageSize, currentPage } = this.state

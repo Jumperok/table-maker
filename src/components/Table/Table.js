@@ -22,15 +22,19 @@ function extractor(data) {
   return "" + data[ind]
 }
 
-function naturalSort(array, extractor) {
+function naturalSort(array, direction, extractor) {
   // преобразуем исходный массив в массив сплиттеров
   var splitters = array.map(makeSplitter);
   // сортируем сплиттеры
   var sorted = splitters.sort(compareSplitters);
   // возвращаем исходные данные в новом порядке
-  return sorted.map(function (splitter) {
-    return splitter.item;
-  });
+  return (direction === 'down') 
+    ? sorted.reverse().map(function (splitter) {
+        return splitter.item;
+      }) 
+    : sorted.map(function (splitter) {
+        return splitter.item;
+      });
   // обёртка конструктора сплиттера
   function makeSplitter(item) {
     return new Splitter(item);
@@ -135,7 +139,7 @@ function naturalSort(array, extractor) {
   };
 }
 
-const newData = naturalSort(tableData.dataFromAPI.slice(1), extractor)
+const newData = naturalSort(tableData.dataFromAPI.slice(1), tableData.sort.direction, extractor)
 newData.unshift(tableData.dataFromAPI[0])
 
   return (
