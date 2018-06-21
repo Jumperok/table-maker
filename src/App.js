@@ -6,6 +6,7 @@ import Table      from './components/Table/Table'
 import Pagination from './components/Pagination/Pagination'
 import Search     from './components/Search'
 import Empty      from './components/Empty'
+import Selected   from './components/Selected'
 
 const API = 'http://www.mocky.io/v2/5b2b349d30000062002344e1'
 
@@ -16,6 +17,7 @@ class App extends React.Component {
     currentPage: 1,
     searchField: '',
     rowNumber  : 0,
+    selectedId : 0,
     sort: {
       field    : '',
       direction: 'up'
@@ -29,12 +31,20 @@ class App extends React.Component {
       .catch(err => console.log(err))
   }
 
+  getArrayFromId = (data, id) => (
+    data.filter(elem => elem[0] === +id)[0]
+  )
+
   setCurrentPage = newCurrentPage => (
     this.setState({ currentPage: newCurrentPage })
   )
 
   setRowNumber = number => (
     this.setState({ rowNumber: number })
+  )
+
+  setSelectedId = id => (
+    this.setState({ selectedId: id })
   )
 
   setSortingField = field => (
@@ -54,7 +64,13 @@ class App extends React.Component {
   )
 
   render() {
-    const { dataFromAPI, pageSize, currentPage, rowNumber } = this.state
+    const { 
+      dataFromAPI, 
+      pageSize, 
+      currentPage, 
+      rowNumber, 
+      selectedId 
+    } = this.state
     
     return (
       dataFromAPI.length
@@ -65,12 +81,22 @@ class App extends React.Component {
               tableData={ this.state } 
               setSortingField={ this.setSortingField }
               setRowNumber={ this.setRowNumber }
+              setSelectedId={ this.setSelectedId }
             />
             <Pagination 
               currentPage={ currentPage } 
               rowNumber={ rowNumber } 
               pageSize={ pageSize } 
               setCurrentPage={ this.setCurrentPage }
+            />
+            <Selected 
+              fieldsName={ Object.values(dataFromAPI[0]) }
+              fieldsValue={ 
+                this.getArrayFromId(
+                  dataFromAPI.slice(1), 
+                  selectedId
+                )
+              }
             />
           </React.Fragment>
         )

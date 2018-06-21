@@ -1,9 +1,24 @@
 import React from 'react'
 
-const Empty = () => (
-  <div className='Empty'>
-    Data not found :(
-  </div>
-)
+const Selected = ({ fieldsName, fieldsValue }) => {
+  
+  return (
+    fieldsValue
+    ? <div className='Selected'>
+        Выбранный товар:
+        <div className='fieldsName'>
+          {
+            fieldsName.map(name => <div>{name}:</div>)
+          }
+        </div>
+        <div className='fieldsValue'>
+          {
+            fieldsValue.map(value => <div>{value}</div>)
+          }
+        </div>
+      </div>
+    : null
+  )
+}
 
-export default Empty
+export default Selected

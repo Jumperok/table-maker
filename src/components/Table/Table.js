@@ -6,7 +6,12 @@ import { naturalSort, getFieldIndex } from '../../lib'
 import TableHeader from './TableHeader'
 import TableBody   from './TableBody'
 
-const Table = ({ tableData, setSortingField, setRowNumber }) => { 
+const Table = ({ 
+  tableData, 
+  setSortingField, 
+  setRowNumber, 
+  setSelectedId 
+}) => { 
   const { dataFromAPI, sort, searchField, rowNumber } = tableData
 
   const getSortedData = (data, direction, fieldIndex) => {
@@ -27,7 +32,6 @@ const Table = ({ tableData, setSortingField, setRowNumber }) => {
   }
 
   const updateRowNumber = (newNumber, currentNumber) => {
-    console.log(newNumber, currentNumber)
     newNumber !== currentNumber && setRowNumber(newNumber)
   }
 
@@ -46,12 +50,14 @@ const Table = ({ tableData, setSortingField, setRowNumber }) => {
         headerData={ dataFromAPI[0] } 
         setSortingField={ setSortingField } 
       />
-      <TableBody bodyData={ 
+      <TableBody 
+        bodyData={ 
           {
             ...tableData, 
             dataFromAPI: newData
           } 
         }
+        setSelectedId={ setSelectedId }
       /> 
     </div>
   )

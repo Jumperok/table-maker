@@ -4,11 +4,21 @@ import React from 'react'
 
 import TableRowColumn from './TableRowColumn'
 
-const TableRow = ({ rowData, className, handleClick, type }) => {
+const TableRow = ({ 
+  rowData, 
+  className, 
+  handleClick, 
+  type, 
+  setSelectedId 
+}) => {
+  const handleRowClick = event => {
+    setSelectedId(event.currentTarget.firstChild.innerText)
+  }
+
   return(
   <div 
     className={ className } 
-    
+    onClick={ (type === 'body') ? handleRowClick : null }
   >
     {
       Object.values(rowData).map(

@@ -4,7 +4,7 @@ import React from 'react'
 
 import TableRow from './TableRow'
 
-const TableBody = ({ bodyData }) => {
+const TableBody = ({ bodyData, setSelectedId }) => {
 
   const { dataFromAPI, pageSize, currentPage } = bodyData
 
@@ -12,9 +12,11 @@ const TableBody = ({ bodyData }) => {
     bodyData.map(
       row => (
         <TableRow 
+         setSelectedId={ setSelectedId }
+          type='body'
           className='TableRow' 
-          key={row[0]} 
-          rowData={row} 
+          key={ row[0] } 
+          rowData={ row } 
         />
       )
     ).slice( (currentPage-1)*pageSize, (currentPage-1)*pageSize+pageSize )
