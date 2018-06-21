@@ -16,25 +16,26 @@ const TableRow = ({
   }
 
   return(
-  <div 
-    className={ className } 
-    onClick={ (type === 'body') ? handleRowClick : null }
-  >
-    {
-      Object.values(rowData).map(
-        (value, index) => (
-          <TableRowColumn 
-            rowData={ rowData }
-            type={ type } 
-            handleClick={ handleClick }
-            key={ index }
-          >
-            { value }
-          </TableRowColumn>
+    <div 
+      className={ className } 
+      onClick={ (type === 'body') ? handleRowClick : null }
+    >
+      {
+        Object.values(rowData).map(
+          (value, index) => (
+            <TableRowColumn 
+              rowData={ rowData }
+              type={ type } 
+              handleClick={ handleClick }
+              key={ index }
+            >
+              { value }
+            </TableRowColumn>
+          )
         )
-      )
-    }
-  </div>)
+      }
+    </div>
+  )
 }
 
 export default TableRow
