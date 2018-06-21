@@ -8,12 +8,16 @@ const Selected = ({ fieldsName, fieldsValue }) => {
         Выбранный товар:
         <div className='fieldsName'>
           {
-            fieldsName.map(name => <div>{name}:</div>)
+            fieldsName.map((name, index) => (
+              <div key={index}>{name}:</div>
+            ))
           }
         </div>
         <div className='fieldsValue'>
           {
-            fieldsValue.map(value => <div>{value}</div>)
+            fieldsValue.map((value, index) => (
+              <div key={index}>{value}</div>
+            ))
           }
         </div>
       </div>
