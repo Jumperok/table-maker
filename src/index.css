@@ -8,6 +8,10 @@ body {
   border: 1px solid red;
 }
 
+/* .TableRowColumn {
+  border: 1px solid red;
+} */
+
 .TableHeader {
   display: flex;
   justify-content: space-around;
@@ -20,4 +24,27 @@ body {
   justify-content: space-around;
   
   border: 1px solid black;
+}
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.PaginationElem {
+  cursor: pointer;
+  padding: 0.5%;
+  border: 1px solid red;
+}
+
+.TableHeaderRowColumn {
+  cursor: pointer;
+}
+
+.Empty {
+  font-size: 6vw;
+  top: 2em;
+  position: relative;
+  text-align: center;
 }

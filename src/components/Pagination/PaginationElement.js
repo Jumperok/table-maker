@@ -8,9 +8,9 @@ const PaginationElement = ({ children, setCurrentPage }) => {
   return (
     <div 
       className='PaginationElem' 
-      onClick={handleClick}
+      onClick={ handleClick }
     >
-      {children}
+      { children }
     </div>
   )
 }

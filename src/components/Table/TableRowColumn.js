@@ -15,8 +15,8 @@ const TableRowColumn = ({
 
   return (
     <div 
-      className='TableRowColumn' 
-      onClick={ type === 'header' ? setSortingField : null }
+      className={ (type === 'header') ? 'TableHeaderRowColumn' : 'TableRowColumn' } 
+      onClick={ (type === 'header') ? setSortingField : null }
     >
       { children }
     </div>

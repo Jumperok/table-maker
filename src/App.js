@@ -1,81 +1,82 @@
 import React from 'react'
-// import { fetchData } from './api'
-// import { getData } from './lib'
 
 // Components //
 
 import Table      from './components/Table/Table'
-import Pagination from './components/Pagination'
+import Pagination from './components/Pagination/Pagination'
+import Search     from './components/Search'
+import Empty      from './components/Empty'
 
-const API = 'http://www.mocky.io/v2/5b29e2bd30000066009cd055'
+const API = 'http://www.mocky.io/v2/5b2b349d30000062002344e1'
 
 class App extends React.Component {
   state = {
-    dataFromAPI : [],
-    pageSize    : 10,
-    currentPage : 1,
+    dataFromAPI: [],
+    pageSize   : 10,
+    currentPage: 1,
+    searchField: '',
+    rowNumber  : 0,
     sort: {
       field    : '',
       direction: 'up'
-    }
-    //sortingField: ''
+    },
   }
 
   componentDidMount() {
-    fetch(API) // ОШИБКИ
+    fetch(API)
       .then(response => response.json())
-      .then(dataAPI => {
-        this.setState({ dataFromAPI: dataAPI })
-      })
+      .then(dataAPI => this.setState({ dataFromAPI: dataAPI }))
+      .catch(err => console.log(err))
   }
 
-  setCurrentPage = (newCurrentPage) => this.setState({ currentPage: newCurrentPage })
+  setCurrentPage = newCurrentPage => (
+    this.setState({ currentPage: newCurrentPage })
+  )
 
-  setSortingField = (field) => this.setState({ sort: {...this.state.sort, field, direction: this.state.sort.direction === 'up' ? 'down' : 'up'} })
+  setRowNumber = number => (
+    this.setState({ rowNumber: number })
+  )
+
+  setSortingField = field => (
+    this.setState({ 
+      sort: {
+        ...this.state.sort, 
+        field, 
+        direction: (this.state.sort.direction === 'up') 
+          ? 'down' 
+          : 'up'
+      } 
+    })
+  )
+
+  setSearchField = search => (
+    this.setState({ searchField: search })
+  )
 
   render() {
-    const { dataFromAPI, pageSize, currentPage } = this.state
+    const { dataFromAPI, pageSize, currentPage, rowNumber } = this.state
     
     return (
       dataFromAPI.length
       ? (
           <React.Fragment>
+            <Search setSearchField={ this.setSearchField } />
             <Table 
               tableData={ this.state } 
-              setSortingField={ this.setSortingField } 
+              setSortingField={ this.setSortingField }
+              setRowNumber={ this.setRowNumber }
             />
             <Pagination 
               currentPage={ currentPage } 
-              rowNumber={ dataFromAPI.slice(1).length } 
+              rowNumber={ rowNumber } 
               pageSize={ pageSize } 
               setCurrentPage={ this.setCurrentPage }
             />
           </React.Fragment>
         )
-      : null
+      : <Empty />
     )
   }
 }
 
-export default App;
-
-/* <TableHeader>
-<TableRow>
-  <TableHeaderColumn>1</TableHeaderColumn>
-  <TableHeaderColumn>2</TableHeaderColumn>
-  <TableHeaderColumn>3</TableHeaderColumn>
-</TableRow>
-</TableHeader>
-<TableBody>
-<TableRow>
-  <TableRowColumn>
-    lol
-  </TableRowColumn>
-  <TableRowColumn>
-    lol1
-  </TableRowColumn>
-  <TableRowColumn>
-    lol2
-  </TableRowColumn>
-</TableRow>
-</TableBody> */
+export default App

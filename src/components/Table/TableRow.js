@@ -5,7 +5,6 @@ import React from 'react'
 import TableRowColumn from './TableRowColumn'
 
 const TableRow = ({ rowData, className, handleClick, type }) => {
-  //console.log("rowData", rowData)
   return(
   <div 
     className={ className } 

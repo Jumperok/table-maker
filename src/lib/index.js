@@ -1,19 +1,16 @@
-import { fetchData } from '../api'
-
-export const getData = async (cb) => {
-  try {
-    const data = await fetchData()
-    cb(data)
-    return data
-  } catch (err) {
-    
-  }
-}
-
 export const getKeyByValue = (object, value) => (
   Object.keys(object)
     .find(key => object[key] === value)
 )
+
+export const getFieldIndex = (obj, field) => {
+  let index = 0
+  for (let key in obj){
+    if(key === field) return index
+    index++
+  }
+  return NaN
+}
 
 export const naturalSort = (array, direction, fieldIndex) => {
   // преобразуем исходный массив в массив сплиттеров
@@ -21,13 +18,13 @@ export const naturalSort = (array, direction, fieldIndex) => {
   // сортируем сплиттеры
   var sorted = splitters.sort(compareSplitters);
   // возвращаем исходные данные в новом порядке
-  return (direction === 'down') 
-    ? sorted.reverse().map(function (splitter) {
-        return splitter.item;
-      }) 
-    : sorted.map(function (splitter) {
-        return splitter.item;
-      });
+
+  return (
+    (direction === 'down') 
+      ? sorted.reverse() 
+      : sorted
+    ).map(splitter => splitter.item) 
+
   // обёртка конструктора сплиттера
   function makeSplitter(item) {
     return new Splitter(item);
@@ -128,13 +125,4 @@ export const naturalSort = (array, direction, fieldIndex) => {
       return ch.charCodeAt(0);
     };
   };
-}
-
-export const getFieldIndex = (obj, field) => {
-  let index = 0
-  for (let key in obj){
-    if(key === field) return index
-    index++
-  }
-  return NaN
 }
